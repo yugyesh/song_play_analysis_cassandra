@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 black = "==21.7b0"
 pylint = "==v2.9.6"
+cassandra-driver = "==3.25.0"
 
 [dev-packages]
 
