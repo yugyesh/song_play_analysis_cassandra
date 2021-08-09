@@ -10,3 +10,6 @@ Pylint is a Python static code analysis tool which looks for programming errors,
 
 ## cassandra-driver
 A modern, feature-rich and highly-tunable Python client library for Apache Cassandra
+
+## pandas
+pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language.
