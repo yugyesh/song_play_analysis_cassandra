@@ -53,3 +53,25 @@ song_title text,
 PRIMARY KEY(song_title, username)
 )
 """
+
+# insert table queries
+music_library_insert = """
+INSERT INTO music_library(
+session_id, item_in_session, artist, song_title, length
+)
+VALUES(%s, %s, %s, %s, %s)
+"""
+
+user_playlist_insert = """
+INSERT INTO user_playlist(
+user_id, username, session_id, item_in_session, artist, song_title
+)
+VALUES(%s, %s, %s, %s, %s, %s)
+"""
+
+user_info_insert = """
+INSERT INTO user_info(
+username, gender, level, location, song_title    
+)
+VALUES(%s, %s, %s, %s, %s)
+"""
