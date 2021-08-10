@@ -1,4 +1,5 @@
 from cassandra.cluster import Cluster
+from queries import *
 
 
 def connect_db(keyspace_name):
@@ -41,3 +42,25 @@ def connect_db(keyspace_name):
         print(error)
 
     return session
+
+
+def create_tables(session):
+    # create music library table
+    try:
+        session.execute(music_library_create)
+    except Exception as error:
+        print("Unable to create music_library")
+        print(error)
+
+    # create user table
+    try:
+        session.execute(user_playlist_create)
+    except Exception as error:
+        print("Unable to create user_info")
+        print(error)
+
+    # create users
+    try:
+        session.execute(user_info_create)
+    except Exception as error:
+        print(error)
