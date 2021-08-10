@@ -1,5 +1,6 @@
 import csv
 
+import pandas as pd
 from cassandra.cluster import Cluster
 from queries import (
     music_library_create,
@@ -28,7 +29,7 @@ class Database:
         # connects to a local cluster
         try:
             self.cluster = Cluster(["127.0.0.1"])
-            self.session = cluster.connect()
+            self.session = self.cluster.connect()
         except Exception as error:
             print(error)
 
@@ -127,7 +128,7 @@ class Database:
                     print("Key error")
                     print(error)
                 except Exception as error:
-                    print("Error inserting user info")
+                    print("Error inserting user playlist")
                     print(error)
 
                 # insert data to user_info table
@@ -173,11 +174,15 @@ class Database:
         except Exception as error:
             print(error)
 
+    def pandas_factory(self, colnames, rows):
+        return pd.DataFrame(rows, columns=colnames)
+
     def select_values(self, session, query):
         try:
+            session.row_factory = self.pandas_factory
             rows = session.execute(query)
+            df = rows._current_rows
+            return df
         except Exception as error:
             print("Unable to select the data")
             print(error)
-
-        return rows
