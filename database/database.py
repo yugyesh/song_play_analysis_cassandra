@@ -160,3 +160,13 @@ def drop_tables(session):
         session.execute(user_info_drop)
     except Exception as error:
         print(error)
+
+
+def select_values(session, query):
+    try:
+        rows = session.execute(query)
+    except Exception as error:
+        print("Unable to select the data")
+        print(error)
+
+    return rows

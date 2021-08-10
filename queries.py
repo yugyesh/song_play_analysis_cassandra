@@ -80,3 +80,32 @@ VALUES(%s, %s, %s, %s, %s)
 music_library_drop = "DROP TABLE IF EXISTS music_library"
 user_playlist_drop = "DROP TABLE IF EXISTS user_playlist"
 user_info_drop = "DROP TABLE IF EXISTS user_info"
+
+
+# Query 1.
+# Give me the artist, song title and song's length in the music app history
+# that was heard during sessionId = 338, and itemInSession  = 4
+
+music_library_select = """
+SELECT artist, song_title, length
+FROM music_library
+WHERE session_id = 338 AND item_in_session = 4
+"""
+
+# Query 2.
+# Give me only the following: name of artist, song (sorted by itemInSession)
+# and user (first and last name) for userid = 10, sessionid = 182
+user_playlist_select = """
+SELECT artist, song_title, username
+FROM user_playlist
+WHERE user_id=10 and session_id=182
+"""
+
+# Query 3.
+# Give me every user name (first and last) in my music app history
+# who listened to the song 'All Hands Against His Own'
+user_info_select = """
+SELECT username
+FROM user_info
+WHERE song_title='All Hands Against His Own'
+"""
