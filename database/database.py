@@ -1,6 +1,17 @@
-from cassandra.cluster import Cluster
-from queries import *
 import csv
+
+from cassandra.cluster import Cluster
+from queries import (
+    music_library_create,
+    music_library_drop,
+    music_library_insert,
+    user_info_create,
+    user_info_drop,
+    user_info_insert,
+    user_playlist_create,
+    user_playlist_drop,
+    user_playlist_insert,
+)
 
 
 def connect_db(keyspace_name):
