@@ -75,3 +75,8 @@ username, gender, level, location, song_title
 )
 VALUES(%s, %s, %s, %s, %s)
 """
+
+# drop table queries
+music_library_drop = "DROP TABLE IF EXISTS music_library"
+user_playlist_drop = "DROP TABLE IF EXISTS user_playlist"
+user_info_drop = "DROP TABLE IF EXISTS user_info"

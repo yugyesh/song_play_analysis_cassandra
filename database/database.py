@@ -135,3 +135,28 @@ def insert_values(session):
             except Exception as error:
                 print("Error inserting user info")
                 print(error)
+
+
+def drop_tables(session):
+    """Drop all tables
+
+    Args:
+        cassandra.cluster.Session: Session of a connected keyspace
+    """
+    # drop music library table
+    try:
+        session.execute(music_library_drop)
+    except Exception as error:
+        print(error)
+
+    # drop user table
+    try:
+        session.execute(user_playlist_drop)
+    except Exception as error:
+        print(error)
+
+    # drop users table
+    try:
+        session.execute(user_info_drop)
+    except Exception as error:
+        print(error)
