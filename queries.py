@@ -1,12 +1,8 @@
 # create table queries
 """
-Reason of selecting these primary key in song_info_by_session are
+Reason of selecting these primary key in song_info_by_session is
 - Session_id and item_in_session is taken as first and second
-item since these are used in where clause
-- The song_title has been used to maintain the uniqueness of primary key
-because it is more likely to have duplicate primary key in case of pallandrom number.
-- Example: primaray key for session_id: 12 & item_in_session_id: 1 and session_id: 1
-& item_in_session_id: 21 will be same
+item since these are used in where clause and combinely creates unique primary key
 """
 song_info_by_session_create = """
 CREATE TABLE IF NOT EXISTS song_info_by_session(
@@ -15,26 +11,26 @@ item_in_session int,
 artist text,
 song_title text,
 length decimal,
-PRIMARY KEY(session_id, item_in_session, song_title)
+PRIMARY KEY(session_id, item_in_session)
 )
 """
 
 """
 Reason of using this these primary key in song_info_by_user are
-- user_id and session_id is taken as first and second
-item since these are used in where clause
-- The item_in_session has been used as clustering columns for sorting.
-- song_title has been used to avoid the duplicate key scenerio for pallandrome numbers
+- user_id and session_id is taken as partation key because the songs are
+sorted based on item_in_session.
 """
+# ! The sequence of the columns in the CREATE and INSERT statements
+# ! should follow the order of the COMPOSITE PRIMARY KEY and CLUSTERING columns
 song_info_by_user_create = """
 CREATE TABLE IF NOT EXISTS song_info_by_user(
 user_id int,
-username text,
 session_id int,
 item_in_session int,
+username text,
 artist text,
 song_title text,
-PRIMARY KEY(user_id, session_id, item_in_session, song_title)
+PRIMARY KEY((user_id, session_id), item_in_session)
 )
 """
 
@@ -45,12 +41,13 @@ Reason of using this these primary key in user_info_by_song are
 """
 user_info_by_song_create = """
 CREATE TABLE IF NOT EXISTS user_info_by_song(
+song_title text,
+user_id int,
 username text,
 gender text,
 level text,
 location text,
-song_title text,
-PRIMARY KEY(song_title, username)
+PRIMARY KEY(song_title, user_id)
 )
 """
 
@@ -64,16 +61,16 @@ VALUES(%s, %s, %s, %s, %s)
 
 song_info_by_user_insert = """
 INSERT INTO song_info_by_user(
-user_id, username, session_id, item_in_session, artist, song_title
+user_id, session_id, item_in_session, username, artist, song_title
 )
 VALUES(%s, %s, %s, %s, %s, %s)
 """
 
 user_info_by_song_insert = """
 INSERT INTO user_info_by_song(
-username, gender, level, location, song_title    
+song_title, user_id, username, gender, level, location
 )
-VALUES(%s, %s, %s, %s, %s)
+VALUES(%s, %s, %s, %s, %s, %s)
 """
 
 # drop table queries

@@ -7,7 +7,7 @@ from queries import (
 )
 
 # preprocess the data
-preprocess()
+# preprocess()
 
 db = Database()
 # create connection to the sparkify database

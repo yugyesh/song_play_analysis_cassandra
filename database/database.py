@@ -117,9 +117,9 @@ class Database:
                         song_info_by_user_insert,
                         (
                             int(row["userId"]),
-                            f"{row['firstName']} {row['lastName']}",
                             int(row["sessionId"]),
                             int(row["itemInSession"]),
+                            f"{row['firstName']} {row['lastName']}",
                             row["artist"],
                             row["song"],
                         ),
@@ -136,11 +136,12 @@ class Database:
                     session.execute(
                         user_info_by_song_insert,
                         (
+                            row["song"],
+                            int(row["userId"]),
                             f"{row['firstName']} {row['lastName']}",
                             row["gender"],
                             row["level"],
                             row["location"],
-                            row["song"],
                         ),
                     )
                 except KeyError as error:
