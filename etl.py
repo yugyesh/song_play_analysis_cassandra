@@ -1,10 +1,13 @@
-import csv
 from preprocess import preprocess
 from database.database import Database
-from queries import music_library_select, user_playlist_select, user_info_select
+from queries import (
+    song_info_by_session_select,
+    song_info_by_user_select,
+    user_info_by_song_select,
+)
 
 # preprocess the data
-preprocess()
+# preprocess()
 
 db = Database()
 # create connection to the sparkify database
@@ -22,13 +25,13 @@ db.insert_values(session=session, filepath="./event_datafile_new.csv")
 
 # select values
 # music library
-df_music = db.select_values(session=session, query=music_library_select)
+df_music = db.select_values(session=session, query=song_info_by_session_select)
 print(df_music.head())
 
 # # user playlist info
-df_user_playlist = db.select_values(session=session, query=user_playlist_select)
+df_user_playlist = db.select_values(session=session, query=song_info_by_user_select)
 print(df_user_playlist.head())
 
-# user_info
-df_user_info = db.select_values(session=session, query=user_info_select)
-print(df_user_info.head())
+# user_info_by_song
+df_user_info_by_song = db.select_values(session=session, query=user_info_by_song_select)
+print(df_user_info_by_song.head())

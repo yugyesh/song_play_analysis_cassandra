@@ -32,7 +32,10 @@ This program performs operations such as:
 - Select values
 
 ### etl&#46;py & etl.ipynp
-Both of the programs perform same actions: 
+Both of the program perform same actions: 
 - Preprocess the event data
 - Store the data in the form of tables
 - Perform select operation on the database to answer the question
+
+## Project management
+To view the development of the project please visit this [link](https://bejewled-kip-9a9.notion.site/412e911f64fb451f97c0ac53a525ad1d?v=8a687efefa6d415f9d04fa4cab4ae713)

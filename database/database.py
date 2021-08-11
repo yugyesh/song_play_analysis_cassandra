@@ -3,15 +3,15 @@ import csv
 import pandas as pd
 from cassandra.cluster import Cluster
 from queries import (
-    music_library_create,
-    music_library_drop,
-    music_library_insert,
-    user_info_create,
-    user_info_drop,
-    user_info_insert,
-    user_playlist_create,
-    user_playlist_drop,
-    user_playlist_insert,
+    song_info_by_session_create,
+    song_info_by_session_drop,
+    song_info_by_session_insert,
+    user_info_by_song_create,
+    user_info_by_song_drop,
+    user_info_by_song_insert,
+    song_info_by_user_create,
+    song_info_by_user_drop,
+    song_info_by_user_insert,
 )
 
 
@@ -68,21 +68,21 @@ class Database:
         """
         # create music library table
         try:
-            session.execute(music_library_create)
+            session.execute(song_info_by_session_create)
         except Exception as error:
-            print("Unable to create music_library")
+            print("Unable to create song_info_by_session")
             print(error)
 
-        # create user table
+        # create song_info_by_user table
         try:
-            session.execute(user_playlist_create)
+            session.execute(song_info_by_user_create)
         except Exception as error:
-            print("Unable to create user_info")
+            print("Unable to create user_info_by_song")
             print(error)
 
-        # create users
+        # create user_info_by_song table
         try:
-            session.execute(user_info_create)
+            session.execute(user_info_by_song_create)
         except Exception as error:
             print(error)
 
@@ -97,9 +97,9 @@ class Database:
 
             for row in csv_file:
                 try:
-                    # insert data into the music_library
+                    # insert data into the song_info_by_session
                     session.execute(
-                        music_library_insert,
+                        song_info_by_session_insert,
                         (
                             int(row["sessionId"]),
                             int(row["itemInSession"]),
@@ -111,15 +111,15 @@ class Database:
                 except Exception as error:
                     print(error)
 
-                # insert data into the user_playlist insert
+                # insert data into the song_info_by_user insert
                 try:
                     session.execute(
-                        user_playlist_insert,
+                        song_info_by_user_insert,
                         (
                             int(row["userId"]),
-                            f"{row['firstName']} {row['lastName']}",
                             int(row["sessionId"]),
                             int(row["itemInSession"]),
+                            f"{row['firstName']} {row['lastName']}",
                             row["artist"],
                             row["song"],
                         ),
@@ -131,16 +131,17 @@ class Database:
                     print("Error inserting user playlist")
                     print(error)
 
-                # insert data to user_info table
+                # insert data to user_info_by_song table
                 try:
                     session.execute(
-                        user_info_insert,
+                        user_info_by_song_insert,
                         (
+                            row["song"],
+                            int(row["userId"]),
                             f"{row['firstName']} {row['lastName']}",
                             row["gender"],
                             row["level"],
                             row["location"],
-                            row["song"],
                         ),
                     )
                 except KeyError as error:
@@ -158,19 +159,19 @@ class Database:
         """
         # drop music library table
         try:
-            session.execute(music_library_drop)
+            session.execute(song_info_by_session_drop)
         except Exception as error:
             print(error)
 
         # drop user table
         try:
-            session.execute(user_playlist_drop)
+            session.execute(song_info_by_user_drop)
         except Exception as error:
             print(error)
 
         # drop users table
         try:
-            session.execute(user_info_drop)
+            session.execute(user_info_by_song_drop)
         except Exception as error:
             print(error)
 
